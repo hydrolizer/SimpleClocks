@@ -1,0 +1,71 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="clr-namespace:SimpleClocks.Controls">
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/Common.xaml" />
+		<ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.xaml" />
+		<ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Dark.xaml"/>
+	</ResourceDictionary.MergedDictionaries>
+
+	<controls:DropDownBorderThicknessConverter x:Key="DropDownBorderThicknessConverter" />
+	<controls:DropDownColumnConverter x:Key="DropDownColumnConverter" />
+
+	<DataTemplate x:Key="DownArrowTemplate">
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<ContentControl
+				Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Content}" />
+			<Path
+				Grid.Column="1"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Bottom"
+				Margin="5,0,0,4"
+				Data="M 0 0 L 4 6 L 8 0 Z"
+				Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=Foreground}"
+			/>
+		</Grid>
+	</DataTemplate>
+
+	<DataTemplate x:Key="UpArrowTemplate">
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<ContentControl
+				Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Content}" />
+			<controls:AutoGreyableImage
+				x:Name="PART_DownArrow"
+				Grid.Column="1"
+				Margin="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:DropDownButton}}, Path=DownArrowPadding}"
+				HorizontalAlignment="Left"
+				Style="{StaticResource GrayableImage}"
+				RenderTransformOrigin="0.5,0.5"
+				Source="/SimpleClocks;component/Resources/img/arrow-down.png">
+				<controls:AutoGreyableImage.RenderTransform>
+					<ScaleTransform ScaleY="-1" />
+				</controls:AutoGreyableImage.RenderTransform>
+			</controls:AutoGreyableImage>
+		</Grid>
+	</DataTemplate>
+
+	<Style TargetType="{x:Type controls:DropDownButton}" x:Key="RegularDropDown" BasedOn="{StaticResource {x:Type ToggleButton}}">
+		<Setter Property="ContentTemplate" Value="{StaticResource DownArrowTemplate}" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="Margin" Value="0" />
+		<Style.Triggers>
+			<Trigger Property="ArrowDirection" Value="{x:Static controls:Side.Up}">
+				<Setter Property="ContentTemplate" Value="{StaticResource UpArrowTemplate}" />
+			</Trigger>
+			<Trigger Property="ShowDownArrow" Value="False">
+				<Setter Property="ContentTemplate" Value="{x:Null}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+</ResourceDictionary>
