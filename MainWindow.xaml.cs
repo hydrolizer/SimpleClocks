@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SimpleClocks.Models;
+using SimpleClocks.Services;
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,10 +17,16 @@ namespace SimpleClocks
 		public MainWindow()
 		{
 			InitializeComponent();
-			_model = new ClockModel(RefreshNowAsync);
+			_model = ServicesManager.ClockModel(RefreshNowAsync);
 			DataContext = _model;
-			Loaded += (s, e) => _model.Start();
+			Loaded += MainWindowLoaded;
 			Closing += MainWindowClosing;
+		}
+
+		private void MainWindowLoaded(object sender, System.Windows.RoutedEventArgs e)
+		{
+			Loaded -= MainWindowLoaded;
+			_model.Start();
 		}
 
 		void MainWindowClosing(object sender, CancelEventArgs e)

@@ -2,14 +2,14 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
-	xmlns:utils="clr-namespace:SimpleClocks.Utils"
-	xmlns:mui="http://firstfloorsoftware.com/ModernUI">
+	xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+	xmlns:converters="clr-namespace:SimpleClocks.Utils.Converters">
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/SystemButton.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
-	<utils:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+	<converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 	<SolidColorBrush x:Key="WindowText" Color="#333333" />
 	<SolidColorBrush x:Key="WindowBorderActive" Color="{DynamicResource AccentColor}" />
 	<SolidColorBrush x:Key="TitleBarBackgroundKey" Color="#80FFFFFF" />
@@ -71,10 +71,11 @@
 											<Button
 												IsTabStop="False"
 												Focusable="False"
-												Command="{Binding Source={x:Static SystemCommands.CloseWindowCommand}}"
+												Command="{Binding Source={x:Static shell:SystemCommands.CloseWindowCommand}}"
 												ToolTip="Close">
 												<Button.Style>
 													<Style TargetType="{x:Type Button}" BasedOn="{StaticResource SystemCloseButton}">
+														<Setter Property="Foreground" Value="#D1D1D1" />
 														<Style.Triggers>
 															<Trigger Property="IsMouseOver" Value="True">
 																<Setter Property="Background" Value="#E04239" />

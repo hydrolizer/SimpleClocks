@@ -5,22 +5,25 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="clr-namespace:SimpleClocks"
 	xmlns:properties="clr-namespace:SimpleClocks.Properties"
 	xmlns:utils="clr-namespace:SimpleClocks.Utils"
 	xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
 	xmlns:tb="http://www.hardcodet.net/taskbar"
 	xmlns:controls="clr-namespace:SimpleClocks.Controls"
-	d:DataContext="{d:DesignInstance local:ClockModel, IsDesignTimeCreatable=False}"
+	xmlns:converters="clr-namespace:SimpleClocks.Utils.Converters"
+	xmlns:attached="clr-namespace:SimpleClocks.Utils.Attached"
+	xmlns:models="clr-namespace:SimpleClocks.Models"
+	xmlns:classes="clr-namespace:SimpleClocks.Services.Classes"
+	d:DataContext="{d:DesignInstance models:ClockModel, IsDesignTimeCreatable=False}"
 	mc:Ignorable="d"
 	Padding="0"
 	Icon="/SimpleClocks;component/Clock.ico"
 	Title="Simple clocks"
-	Background="{Binding Source={x:Static utils:ColorProfileManager.Instance}, Path=CurrentProfile[Window background\,#FFFFFFFF].Brush}"
-	TitleBarBackground="{Binding Source={x:Static utils:ColorProfileManager.Instance}, Path=CurrentProfile[Title bar background\,#80FFFFFF].Brush}"
-	TitleBarMouseOverBackground="{Binding Source={x:Static utils:ColorProfileManager.Instance}, Path=CurrentProfile[Title bar mouse over background\,#20D0D0D0].Brush}"
-	TitleBarForeground="{Binding Source={x:Static utils:ColorProfileManager.Instance}, Path=CurrentProfile[Title bar foreground\,#333333].Brush}"
-	TitleBarMouseOverForeground="{Binding Source={x:Static utils:ColorProfileManager.Instance}, Path=CurrentProfile[Title bar mouse over foreground\,#1ba1e2].Brush}"
+	Background="{DynamicResource ClockWindowBackground}"
+	TitleBarBackground="{DynamicResource ClockTitleBarBackground}"
+	TitleBarForeground="{DynamicResource ClockTitleBarForeground}"
+	ActiveWindowTitleBarBackground="{DynamicResource ActiveClockWindowTitleBarBackground}"
+	ActiveWindowTitleBarForeground="{DynamicResource ActiveClockWindowTitleBarForeground}"
 	WindowStyle="None"
 	AllowsTransparency="True"
 	IsTitleBarVisible="{Binding Source={x:Static properties:Settings.Default}, Path=TitleBarVisible, Mode=OneWay}"
@@ -30,8 +33,8 @@
 	WindowStartupLocation="Manual"
 	Left="{Binding Source={x:Static properties:Settings.Default}, Path=X, Mode=TwoWay}"
 	Top="{Binding Source={x:Static properties:Settings.Default}, Path=Y, Mode=TwoWay}"
-	utils:WindowCustomizer.TranslateMouseClicks="{Binding Source={x:Static properties:Settings.Default}, Path=TranslateMouseClicks, Mode=OneWay}"
-	utils:WindowCustomizer.CanMaximize="False">
+	attached:WindowCustomizer.CanMaximize="False"
+	attached:WindowCustomizer.TranslateMouseClicks="{Binding Source={x:Static properties:Settings.Default}, Path=TranslateMouseClicks, Mode=TwoWay}">
 
 	<Window.Resources>
 		<ResourceDictionary>
@@ -39,7 +42,7 @@
 				<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/MainWindowStyle.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 			<!--utils:ToStringConverter x:Key="ToStringConverter" /-->
-			<utils:BindingBoolInversion x:Key="BindingBoolInversion" />
+			<converters:BindingBoolInversion x:Key="BindingBoolInversion" />
 			<utils:DataContextSpy
 				x:Key="TopContext"
 				DataContext="{Binding ElementName=ClockWindow, Path=DataContext}" />
@@ -59,6 +62,14 @@
 
 	<Window.ContextMenu>
 		<ContextMenu>
+			<ContextMenu.Resources>
+				<ResourceDictionary>
+					<ResourceDictionary.MergedDictionaries>
+						<ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.xaml" />
+						<ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Dark.xaml"/>
+					</ResourceDictionary.MergedDictionaries>
+				</ResourceDictionary>
+			</ContextMenu.Resources>
 			<ContextMenu.CommandBindings>
 				<CommandBinding
 					Command="ApplicationCommands.Close"
@@ -70,17 +81,20 @@
 				IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=TitleBarVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 			<MenuItem
 				Header="Color profile"
-				ItemsSource="{Binding Source={x:Static utils:ColorProfileManager.Instance}, Path=Profiles}">
+				ItemsSource="{Binding Source={StaticResource TopContext}, Path=DataContext.ColorProfileManager.Profiles}">
 				<MenuItem.ItemContainerStyle>
 					<Style TargetType="{x:Type MenuItem}">
 						<Setter Property="Header" Value="{Binding ProfileName}" />
 						<Setter Property="IsCheckable" Value="True" />
 						<Setter Property="IsChecked" Value="{Binding IsActive, Mode=OneWay}" />
-						<Setter Property="Command" Value="{Binding Source={x:Static utils:ColorProfileManager.Instance}, Path=ChooseProfileCommand}" />
+						<Setter Property="Command" Value="{Binding Source={StaticResource TopContext}, Path=DataContext.ColorProfileManager.ChooseProfileCommand}" />
 						<Setter Property="CommandParameter" Value="{Binding}" />
 					</Style>
 				</MenuItem.ItemContainerStyle>
 			</MenuItem>
+			<MenuItem
+				Header="Manage profiles"
+				Command="{Binding ManageProfilesCommand}" />
 			<Separator />
 			<MenuItem
 				Header="Close program"
@@ -95,7 +109,6 @@
 			</MenuItem>
 		</ContextMenu>
 	</Window.ContextMenu>
-
 
 	<controls:MainWindowBase.Buttons>
 		<StackPanel
@@ -184,13 +197,13 @@
 					<Separator />
 					<MenuItem
 						Header="Color profile"
-						ItemsSource="{Binding Source={x:Static utils:ColorProfileManager.Instance}, Path=Profiles}">
+						ItemsSource="{Binding Source={StaticResource TopContext}, Path=DataContext.ColorProfileManager.Profiles}">
 						<MenuItem.ItemContainerStyle>
 							<Style TargetType="{x:Type MenuItem}">
 								<Setter Property="Header" Value="{Binding ProfileName}" />
 								<Setter Property="IsCheckable" Value="True" />
 								<Setter Property="IsChecked" Value="{Binding IsActive, Mode=OneWay}" />
-								<Setter Property="Command" Value="{Binding Source={x:Static utils:ColorProfileManager.Instance}, Path=ChooseProfileCommand}" />
+								<Setter Property="Command" Value="{Binding Source={StaticResource TopContext}, Path=DataContext.ColorProfileManager.ChooseProfileCommand}" />
 								<Setter Property="CommandParameter" Value="{Binding}" />
 							</Style>
 						</MenuItem.ItemContainerStyle>
@@ -218,7 +231,7 @@
 				VerticalAlignment="Center"
 				HorizontalAlignment="Center"
 				TextAlignment="Center"
-				Foreground="{Binding Source={x:Static utils:ColorProfileManager.Instance}, Path=CurrentProfile[Window foreground\,#FF000000].Brush}"
+				Foreground="{DynamicResource ClockWindowForeground}"
 				FontFamily="/SimpleClocks;component/Resources/fonts/#Digital-7 Mono"
 				FontSize="72"
 				Text="{Binding Now, StringFormat='HH:mm:ss'}" />

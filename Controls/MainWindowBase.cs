@@ -130,15 +130,15 @@ namespace SimpleClocks.Controls
 			set => SetValue(TitleBarBackgroundProperty, value);
 		}
 
-		public static readonly DependencyProperty TitleBarMouseOverBackgroundProperty = DependencyProperty.Register(
-			nameof(TitleBarMouseOverBackground), typeof(Brush), typeof(MainWindowBase),
+		public static readonly DependencyProperty ActiveWindowTitleBarBackgroundProperty = DependencyProperty.Register(
+			nameof(ActiveWindowTitleBarBackground), typeof(Brush), typeof(MainWindowBase),
 			new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender)
 		);
 
-		public Brush TitleBarMouseOverBackground
+		public Brush ActiveWindowTitleBarBackground
 		{
-			get => (Brush)GetValue(TitleBarMouseOverBackgroundProperty);
-			set => SetValue(TitleBarMouseOverBackgroundProperty, value);
+			get => (Brush)GetValue(ActiveWindowTitleBarBackgroundProperty);
+			set => SetValue(ActiveWindowTitleBarBackgroundProperty, value);
 		}
 
 		public static readonly DependencyProperty TitleBarForegroundProperty = DependencyProperty.Register(
@@ -152,15 +152,15 @@ namespace SimpleClocks.Controls
 			set => SetValue(TitleBarForegroundProperty, value);
 		}
 
-		public static readonly DependencyProperty TitleBarMouseOverForegroundProperty = DependencyProperty.Register(
-			nameof(TitleBarMouseOverForeground), typeof(Brush), typeof(MainWindowBase),
+		public static readonly DependencyProperty ActiveWindowTitleBarForegroundProperty = DependencyProperty.Register(
+			nameof(ActiveWindowTitleBarForeground), typeof(Brush), typeof(MainWindowBase),
 			new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender)
 		);
 
-		public Brush TitleBarMouseOverForeground
+		public Brush ActiveWindowTitleBarForeground
 		{
-			get => (Brush)GetValue(TitleBarMouseOverForegroundProperty);
-			set => SetValue(TitleBarMouseOverForegroundProperty, value);
+			get => (Brush)GetValue(ActiveWindowTitleBarForegroundProperty);
+			set => SetValue(ActiveWindowTitleBarForegroundProperty, value);
 		}
 	}
 }

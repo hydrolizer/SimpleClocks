@@ -3,13 +3,13 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="clr-namespace:SimpleClocks.Controls"
 	xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
-	xmlns:utils="clr-namespace:SimpleClocks.Utils">
+	xmlns:converters="clr-namespace:SimpleClocks.Utils.Converters">
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/SystemButton.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
-	<utils:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+	<converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 	<SolidColorBrush x:Key="WindowText" Color="#333333" />
 	<SolidColorBrush x:Key="WindowBorderActive" Color="{DynamicResource AccentColor}" />
 	<SolidColorBrush x:Key="TitleBarBackgroundKey" Color="#80FFFFFF" />
@@ -19,9 +19,9 @@
 		<Setter Property="Padding" Value="8" />
 		<Setter Property="ResizeMode" Value="CanResizeWithGrip" />
 		<Setter Property="TitleBarBackground" Value="{StaticResource TitleBarBackgroundKey}" />
-		<Setter Property="TitleBarMouseOverBackground" Value="{StaticResource TitleBarMouseOverBackgroundKey}" />
+		<Setter Property="ActiveWindowTitleBarBackground" Value="{StaticResource TitleBarMouseOverBackgroundKey}" />
 		<Setter Property="TitleBarForeground" Value="{StaticResource WindowText}" />
-		<Setter Property="TitleBarMouseOverForeground" Value="{StaticResource Accent}" />
+		<Setter Property="ActiveWindowTitleBarForeground" Value="{StaticResource Accent}" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type controls:MainWindowBase}">
@@ -161,6 +161,24 @@
 					<ControlTemplate.Triggers>
 						<Trigger Property="IsActive" Value="True">
 							<Setter Property="BorderBrush" Value="{DynamicResource WindowBorderActive}" />
+							<Setter
+								TargetName="WindowTitleBar"
+								Property="Background"
+								Value="{Binding
+									RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:MainWindowBase}},
+									Path=ActiveWindowTitleBarBackground}" />
+							<Setter
+								TargetName="WindowTitleText"
+								Property="Foreground"
+								Value="{Binding
+									RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:MainWindowBase}},
+									Path=ActiveWindowTitleBarForeground}" />
+							<Setter
+								TargetName="WindowTitleIcon"
+								Property="Fill"
+								Value="{Binding
+									RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:MainWindowBase}},
+									Path=ActiveWindowTitleBarForeground}" />
 						</Trigger>
 						<Trigger Property="WindowState" Value="Maximized">
 							<Setter TargetName="LayoutRoot" Property="Margin" Value="7" />
@@ -168,26 +186,6 @@
 						<Trigger Property="TitleBarOverContent" Value="True">
 							<Setter TargetName="WindowTitleBar" Property="Grid.Row" Value="1" />
 							<Setter TargetName="WindowTitleBar" Property="VerticalAlignment" Value="Top" />
-						</Trigger>
-						<Trigger SourceName="WindowTitleBar" Property="IsMouseOver" Value="True">
-							<Setter
-								TargetName="WindowTitleBar"
-								Property="Background"
-								Value="{Binding
-									RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:MainWindowBase}},
-									Path=TitleBarMouseOverBackground}" />
-							<Setter
-								TargetName="WindowTitleText"
-								Property="Foreground"
-								Value="{Binding
-									RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:MainWindowBase}},
-									Path=TitleBarMouseOverForeground}" />
-							<Setter
-								TargetName="WindowTitleIcon"
-								Property="Fill"
-								Value="{Binding
-									RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:MainWindowBase}},
-									Path=TitleBarMouseOverForeground}" />
 						</Trigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>

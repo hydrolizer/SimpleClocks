@@ -1,0 +1,180 @@
+﻿<mui:ModernWindow
+	x:Class="SimpleClocks.Dialogs.SettingsWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:scc="clr-namespace:SimpleClocks.Controls"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+	xmlns:models="clr-namespace:SimpleClocks.Models"
+	xmlns:attached="clr-namespace:SimpleClocks.Utils.Attached"
+	xmlns:dialogs="clr-namespace:SimpleClocks.Dialogs"
+	d:DataContext="{d:DesignInstance models:SettingsWindowModel, IsDesignTimeCreatable=False}"
+	mc:Ignorable="d"
+	Icon="/SimpleClocks;component/Clock.ico"
+	Title="Color preferences"
+	TextOptions.TextFormattingMode="Display"
+	UseLayoutRounding="True"
+	SnapsToDevicePixels="True"
+	Width="600"
+	Height="600"
+	WindowStartupLocation="CenterOwner"
+	ShowInTaskbar="False"
+	attached:WindowCustomizer.CanMinimize="False"
+	attached:WindowCustomizer.CanMaximize="False">
+
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/EmptyWindow.xaml" />
+				<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/ColorPickerX.xaml" />
+				<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/Common.xaml" />
+				<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/DropDownButton.xaml" />
+				<ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.xaml" />
+				<ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Dark.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<system:String x:Key="ButtonCell">ButtonCell</system:String>
+		</ResourceDictionary>
+	</Window.Resources>
+
+	<Window.Style>
+		<StaticResource ResourceKey="EmptyDialog" />
+	</Window.Style>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="2*"/>
+			<RowDefinition />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.Resources>
+				<Style TargetType="{x:Type dialogs:ComboBoxX}" BasedOn="{StaticResource {x:Type ComboBox}}" />
+			</Grid.Resources>
+			<TextBlock
+				VerticalAlignment="Center"
+				Margin="0,0,5,0"
+				Foreground="AliceBlue"
+				Text="Color for" />
+			<dialogs:ComboBoxX
+				Grid.Column="1"
+				ItemsSource="{Binding Path=ColorSettings.Colors}"
+				SelectedItem="{Binding CurrentTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				DisplayMemberPath="Description">
+				<ComboBox.ItemContainerStyle>
+					<Style TargetType="{x:Type ComboBoxItem}">
+						<Setter Property="TextElement.FontStyle" Value="Normal" />
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Path=IsChanged}" Value="{StaticResource KeyTrue}">
+								<Setter Property="TextElement.FontStyle" Value="Italic" />
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</ComboBox.ItemContainerStyle>
+			</dialogs:ComboBoxX>
+		</Grid>
+		<scc:ColorPickerX
+			Margin="0,5,0,0"
+			Grid.Row="1"
+			x:Name="ColorPickerX"
+			SelectedColor="{Binding CurrentTarget.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+			Style="{StaticResource ExpandedColorPicker}"
+			DisplayColorAndName="False" />
+		<Border Grid.Row="2">
+			<Border.Resources>
+				<ResourceDictionary>
+					<ResourceDictionary.MergedDictionaries>
+						<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/WindowPreview.xaml" />
+					</ResourceDictionary.MergedDictionaries>
+				</ResourceDictionary>
+			</Border.Resources>
+			<Border.Background>
+				<StaticResource ResourceKey="CheckerBrush" />
+			</Border.Background>
+			<scc:MainWindowPreview
+				x:Name="WindowPreview"
+				ColorSettings="{Binding ColorSettings}"
+				Style="{StaticResource MainWindowPreview}" />
+		</Border>
+		<Grid
+			Grid.Row="3"
+			IsSharedSizeScope="True"
+			Margin="0,5,0,0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" SharedSizeGroup="{StaticResource ButtonCell}" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" SharedSizeGroup="{StaticResource ButtonCell}" />
+				<ColumnDefinition Width="15" />
+				<ColumnDefinition Width="Auto" SharedSizeGroup="{StaticResource ButtonCell}" />
+			</Grid.ColumnDefinitions>
+			<Grid.Resources>
+				<Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+					<Style.Triggers>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter Property="Foreground" Value="White" />
+						</Trigger>
+					</Style.Triggers>
+				</Style>
+				<Style TargetType="{x:Type scc:DropDownButton}" BasedOn="{StaticResource RegularDropDown}">
+					<Style.Triggers>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter Property="Foreground" Value="White" />
+						</Trigger>
+						<Trigger Property="IsChecked" Value="True">
+							<Setter Property="Foreground" Value="White" />
+						</Trigger>
+					</Style.Triggers>
+				</Style>
+			</Grid.Resources>
+			<scc:DropDownButton
+				Grid.Column="0"
+				Padding="9,3"
+				Content="Options">
+				<scc:DropDownButton.Resources>
+					<Style TargetType="{x:Type ContextMenu}">
+						<Setter Property="Padding" Value="0,1,0,0" />
+						<Setter Property="BorderBrush" Value="{DynamicResource Accent}" />
+						<Setter Property="Background" Value="#333333" />
+					</Style>
+					<Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+						<Style.Triggers>
+							<Trigger Property="IsHighlighted" Value="True">
+								<Setter Property="Foreground" Value="White" />
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</scc:DropDownButton.Resources>
+				<scc:DropDownButton.DropDown>
+					<ContextMenu>
+						<MenuItem
+							Header="Export to file"
+							Command="{Binding ExportToFileCommand}" />
+						<MenuItem
+							Header="Import from file"
+							Command="{Binding ImportFromFileCommand}" />
+						<MenuItem
+							Header="Reset to defaults"
+							Command="{Binding ResetToDefaultsCommand}" />
+					</ContextMenu>
+				</scc:DropDownButton.DropDown>
+			</scc:DropDownButton>
+			<Button
+				Grid.Column="2"
+				Padding="9,3"
+				Content="Save"
+				attached:DialogResultHelper.Result="True" />
+			<Button
+				Grid.Column="4"
+				Padding="9,3"
+				IsCancel="True"
+				Content="Cancel"
+				attached:DialogResultHelper.Result="False" />
+		</Grid>
+	</Grid>
+</mui:ModernWindow>

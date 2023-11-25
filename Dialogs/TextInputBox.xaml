@@ -1,0 +1,78 @@
+﻿<mui:ModernWindow
+	x:Class="SimpleClocks.Dialogs.TextInputBox"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:dialogs="clr-namespace:SimpleClocks.Dialogs"
+	xmlns:attached="clr-namespace:SimpleClocks.Utils.Attached"
+	d:DataContext="{d:DesignInstance dialogs:TextInputBox, IsDesignTimeCreatable=False}"
+	mc:Ignorable="d"
+	Icon="/SimpleClocks;component/Clock.ico"
+	Title="{Binding Caption, Mode=OneWay}"
+	TextOptions.TextFormattingMode="Display"
+	UseLayoutRounding="True"
+	SnapsToDevicePixels="True"
+	Width="490"
+	Height="115"
+	Padding="5"
+	WindowStartupLocation="CenterOwner"
+	ShowInTaskbar="False"
+	attached:WindowCustomizer.CanMinimize="False"
+	attached:WindowCustomizer.CanMaximize="False">
+
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/EmptyWindow.xaml" />
+				<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/Common.xaml" />
+				<ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.xaml" />
+				<ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Dark.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<system:String x:Key="ButtonCell">ButtonCell</system:String>
+		</ResourceDictionary>
+	</Window.Resources>
+
+	<Window.Style>
+		<StaticResource ResourceKey="EmptyDialog" />
+	</Window.Style>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<Label
+			Content="{Binding Prompt, Mode=OneWay}"
+			Padding="0"
+			Margin="2,0,0,2" />
+		<TextBox
+			x:Name="ValueTextBox"
+			Grid.Row="1"
+			Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+		<Grid Grid.Row="3" IsSharedSizeScope="True">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" SharedSizeGroup="{StaticResource ButtonCell}" />
+				<ColumnDefinition Width="15" />
+				<ColumnDefinition Width="Auto" SharedSizeGroup="{StaticResource ButtonCell}" />
+			</Grid.ColumnDefinitions>
+			<Button
+				Grid.Column="1"
+				Content="Ok"
+				Padding="7,3"
+				IsDefault="True"
+				Command="{Binding OkCommand}" />
+			<Button
+				Grid.Column="3"
+				Content="Cancel"
+				Padding="7,3"
+				IsCancel="True"
+				attached:DialogResultHelper.Result="False" />
+		</Grid>
+	</Grid>
+</mui:ModernWindow>

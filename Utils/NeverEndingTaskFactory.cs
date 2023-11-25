@@ -32,7 +32,7 @@ namespace SimpleClocks.Utils
 		{
 			//var @do = Application.Current.Dispatcher.InvokeAsync((Action)(() => { }), DispatcherPriority.ContextIdle);
 			//return await Task.Factory.StartNew(async async => await @do, CancellationToken.None);
-			await Application.Current.Dispatcher.InvokeAsync((Action)(() => { }), DispatcherPriority.ContextIdle);
+			await Application.Current.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle);
 		}
 	}
 }

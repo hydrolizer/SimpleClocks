@@ -13,7 +13,7 @@ namespace SimpleClocks.Controls
 	public class ColorPickerX : Xceed.Wpf.Toolkit.ColorPicker
 	{
 		public static readonly DependencyProperty ColorSquareSizeProperty = DependencyProperty.Register(
-			"ColorSquareSize", typeof(double), typeof(ColorPickerX),
+			nameof(ColorSquareSize), typeof(double), typeof(ColorPickerX),
 			new FrameworkPropertyMetadata(
 				14d,
 				FrameworkPropertyMetadataOptions.AffectsArrange |
@@ -50,7 +50,7 @@ namespace SimpleClocks.Controls
 		}
 
 		public static readonly DependencyProperty ColorSquareSizeHeaderProperty = DependencyProperty.Register(
-			"ColorSquareSizeHeader", typeof(string), typeof(ColorPickerX),
+			nameof(ColorSquareSizeHeader), typeof(string), typeof(ColorPickerX),
 			new UIPropertyMetadata("Color square size:")
 		);
 
@@ -73,7 +73,6 @@ namespace SimpleClocks.Controls
 			if (selectionChangedFieldInfo == null) return;
 			_colorCanvas = GetTemplateChild("ColorCanvas") as ColorCanvas;
 			if (_colorCanvas == null) return;
-			_colorCanvas.SelectedColorChanged += (s, e) => Console.WriteLine("Canvas color changed: {0}/{1}", e.OldValue, e.NewValue);
 			_availableColors = GetTemplateChild("PART_AvailableColors") as ListBox;
 			if (_availableColors != null)
 			{

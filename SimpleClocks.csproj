@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Costura.Fody.4.1.0\build\Costura.Fody.props" Condition="Exists('packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" />
+  <Import Project="packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props" Condition="Exists('packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -14,6 +16,8 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <Choose>
     <When Condition=" '$(Configuration)' == 'Debug' ">
@@ -56,6 +60,12 @@
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="Costura, Version=4.1.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>packages\Costura.Fody.4.1.0\lib\net40\Costura.dll</HintPath>
+    </Reference>
+    <Reference Include="FirstFloor.ModernUI, Version=1.0.6.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\FirstFloor.ModernUI.1.0.6.7\lib\net40\FirstFloor.ModernUI.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
@@ -75,8 +85,14 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.31\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.6.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>packages\Ninject.3.3.6\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>packages\NLog.5.0.2\lib\net46\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>packages\PropertyChanged.Fody.4.1.0\lib\net40\PropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -115,34 +131,65 @@
     <Compile Include="Borrowed\Xceed\ColorSpectrumSliderH.cs" />
     <Compile Include="Borrowed\Xceed\ColorUtilities.cs" />
     <Compile Include="Controls\AutoGreyableImage.cs" />
+    <Compile Include="Controls\AutoWidthTextBox.cs" />
     <Compile Include="Controls\ColorCanvasX.cs" />
     <Compile Include="Controls\ColorPickerX.cs" />
     <Compile Include="Controls\DropDownButton.cs" />
+    <Compile Include="Controls\HexColorTextBox.cs" />
     <Compile Include="Controls\MainWindowBase.cs" />
-    <Compile Include="SettingsWindow.xaml.cs">
+    <Compile Include="Controls\MainWindowPreview.cs" />
+    <Compile Include="Dialogs\TextInputBox.xaml.cs">
+      <DependentUpon>TextInputBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RefreshTimeHandler.cs" />
+    <Compile Include="Services\Intefaces\IColorProfileManager.cs" />
+    <Compile Include="Models\SettingsWindowModel.cs" />
+    <Compile Include="Services\Classes\DialogsService.cs" />
+    <Compile Include="Services\Intefaces\IDialogsService.cs" />
+    <Compile Include="Dialogs\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils\BindingBoolInversion.cs" />
-    <Compile Include="Utils\BoolToVisibilityConverter.cs" />
-    <Compile Include="Utils\ColorContainer.cs" />
-    <Compile Include="Utils\ColorProfileManager.cs" />
-    <Compile Include="Utils\ColorSettings.cs" />
-    <Compile Include="Utils\DatabindingDebugConverter.cs" />
+    <Compile Include="Services\ServicesManager.cs" />
+    <Compile Include="Utils\AppCatcher.cs" />
+    <Compile Include="Utils\Attached\Input.cs" />
+    <Compile Include="Utils\Converters\BindingBoolInversion.cs" />
+    <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Models\ColorContainer.cs" />
+    <Compile Include="Services\Classes\ColorProfileManager.cs" />
+    <Compile Include="Models\ColorSettings.cs" />
+    <Compile Include="Utils\ConverterBaseMarkup.cs" />
+    <Compile Include="Utils\Converters\DatabindingDebugConverter.cs" />
     <Compile Include="Utils\DataContextSpy.cs" />
-    <Compile Include="Utils\DependencyObjectExtensions.cs" />
-    <Compile Include="Utils\DialogResultHelper.cs" />
-    <Compile Include="Utils\EnumToBooleanConverter.cs" />
+    <Compile Include="Models\DefaultColors.cs" />
+    <Compile Include="Utils\Extensions\DependencyObjectExtensions.cs" />
+    <Compile Include="Utils\Attached\DialogResultHelper.cs" />
+    <Compile Include="Utils\DoubleUtil.cs" />
+    <Compile Include="Utils\Converters\EnumToBooleanConverter.cs" />
+    <Compile Include="Utils\Extensions\ExceptionExtension.cs" />
+    <Compile Include="Utils\Extensions\ExpressionEx.cs" />
     <Compile Include="Utils\GrayscaleEffect.cs" />
     <Compile Include="Utils\IClosableView.cs" />
+    <Compile Include="Utils\IColorizedView.cs" />
+    <Compile Include="Utils\InputBoxParameters.cs" />
+    <Compile Include="Utils\IsExternalInit.cs" />
+    <Compile Include="Utils\Extensions\IsolatedStorageFileExtensions.cs" />
     <Compile Include="Utils\MessageBoxUtil.cs" />
-    <Compile Include="Utils\ProfilesListModel.cs" />
-    <Compile Include="Utils\ProfilesListWindow.xaml.cs">
+    <Compile Include="Models\ProfilesListModel.cs" />
+    <Compile Include="Dialogs\ProfilesListWindow.xaml.cs">
       <DependentUpon>ProfilesListWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils\ToStringConverter.cs" />
-    <Compile Include="Utils\WindowCustomizer.cs" />
-    <Compile Include="Utils\WindowCustomizerEx.cs" />
+    <Compile Include="Utils\SimpleAppException.cs" />
+    <Compile Include="Utils\TextEqualityComparer.cs" />
+    <Compile Include="Utils\Converters\ToStringConverter.cs" />
+    <Compile Include="Utils\Win32.cs" />
+    <Compile Include="Utils\Win32Error.cs" />
+    <Compile Include="Utils\Attached\WindowCustomizer.cs" />
     <Compile Include="Utils\WpfScreen.cs" />
+    <Compile Include="Utils\Extensions\XmlExtensions.cs" />
+    <Page Include="Dialogs\TextInputBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -151,7 +198,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ClockModel.cs" />
+    <Compile Include="Models\ClockModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -204,11 +251,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SettingsWindow.xaml">
+    <Page Include="Resources\Styles\WindowPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Utils\ProfilesListWindow.xaml">
+    <Page Include="Dialogs\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ProfilesListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -260,20 +311,30 @@
     <Resource Include="Resources\img\Exit.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Frameworks\FirstFloor.ModernUI\trunk\FirstFloor.ModernUI\FirstFloor.ModernUI.csproj">
-      <Project>{9a653a28-fe46-40e8-a14f-48b0e325165d}</Project>
-      <Name>FirstFloor.ModernUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Frameworks\WX\WX.Core\trunk\WX.Core.csproj">
-      <Project>{8e470d4a-2452-4a02-b990-58b7b80612a8}</Project>
-      <Name>WX.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\img\arrow-down.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\img\intro.png" />
+    <Resource Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FodyWeavers.Debug.xml" />
+    <Resource Include="FodyWeavers.Release.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\Fody.6.8.0\build\Fody.targets" Condition="Exists('packages\Fody.6.8.0\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Fody.6.8.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Fody.6.8.0\build\Fody.targets'))" />
+    <Error Condition="!Exists('packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props'))" />
+    <Error Condition="!Exists('packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Costura.Fody.4.1.0\build\Costura.Fody.props'))" />
+  </Target>
+  <PropertyGroup>
+    <PreBuildEvent>if $(ConfigurationName) == Debug (
+  copy /Y "$(SolutionDir)FodyWeavers.Debug.xml" "$(SolutionDir)FodyWeavers.xml"
+) ELSE (
+  copy /Y "$(SolutionDir)FodyWeavers.Release.xml" "$(SolutionDir)FodyWeavers.xml"
+)</PreBuildEvent>
+  </PropertyGroup>
 </Project>

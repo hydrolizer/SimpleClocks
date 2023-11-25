@@ -77,7 +77,7 @@
 								<Grid.Resources>
 									<controls:SelectedColorTextConverter x:Key="SelectedColorTextConverter" />
 								</Grid.Resources>
-								<TextBox
+								<controls:HexColorTextBox
 									VerticalAlignment="Center"
 									Margin="3,0,5,0"
 									Foreground="AliceBlue"
@@ -95,7 +95,7 @@
 												Command="{Binding ElementName=ColorCanvas, Path=TextBoxLostFocusCommand}"/>
 										</i:EventTrigger>
 									</i:Interaction.Triggers>
-								</TextBox>
+								</controls:HexColorTextBox>
 								<Border
 									Grid.Column="1"
 									BorderThickness="1"

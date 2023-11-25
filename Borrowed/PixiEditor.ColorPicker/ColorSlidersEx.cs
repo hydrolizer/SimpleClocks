@@ -6,6 +6,7 @@ using System.Windows.Input;
 using ColorPicker;
 using SimpleClocks.Utils;
 using GalaSoft.MvvmLight.CommandWpf;
+using SimpleClocks.Utils.Extensions;
 
 namespace SimpleClocks.Borrowed.PixiEditor.ColorPicker
 {

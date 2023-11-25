@@ -3,6 +3,7 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using PropertyChanged;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
@@ -53,3 +54,11 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+// Fody.PropertyChanged targets
+[assembly: FilterType("^SimpleClocks\\.Dialogs\\.TextInputBox$")]
+[assembly: FilterType("^SimpleClocks\\.Models\\.ClockModel$")]
+[assembly: FilterType("^SimpleClocks\\.Models\\.ColorContainer$")]
+[assembly: FilterType("^SimpleClocks\\.Models\\.ColorSettings$")]
+[assembly: FilterType("^SimpleClocks\\.Models\\.ProfilesListModel$")]
+[assembly: FilterType("^SimpleClocks\\.Models\\.SettingsWindowModel$")]

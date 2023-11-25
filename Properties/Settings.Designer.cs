@@ -120,7 +120,7 @@ namespace SimpleClocks.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool TranslateMouseClicks {
             get {
                 return ((bool)(this["TranslateMouseClicks"]));
