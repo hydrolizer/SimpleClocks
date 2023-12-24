@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
-using RelayCommand = GalaSoft.MvvmLight.CommandWpf.RelayCommand;
+using CommunityToolkit.Mvvm.Input;
 
 namespace SimpleClocks.Models
 {

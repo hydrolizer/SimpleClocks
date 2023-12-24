@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Data;
-using GalaSoft.MvvmLight.Command;
+using CommunityToolkit.Mvvm.Input;
 using SimpleClocks.Models;
 
 namespace SimpleClocks.Services.Intefaces

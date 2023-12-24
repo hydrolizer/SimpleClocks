@@ -4,11 +4,10 @@
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:controls="clr-namespace:SimpleClocks.Controls"
 	xmlns:utils="clr-namespace:SimpleClocks.Utils"
-	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-	xmlns:command="http://www.galasoft.ch/mvvmlight">
+	xmlns:b="http://schemas.microsoft.com/xaml/behaviors">
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="/Xceed.Wpf.Toolkit;component/colorpicker/themes/generic.xaml" />
+		<ResourceDictionary Source="/Xceed.Wpf.Toolkit.NET5;component/colorpicker/themes/generic.xaml" />
 		<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/ColorCanvasX.xaml" />
 		<ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.xaml" />
 		<ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Dark.xaml"/>
@@ -83,18 +82,18 @@
 									Foreground="AliceBlue"
 									Text="{Binding ElementName=ColorCanvas, Path=HexadecimalString}"
 									Style="{StaticResource ColorCanvasTextBoxStyle}">
-									<i:Interaction.Triggers>
-										<i:EventTrigger EventName="KeyDown">
-											<command:EventToCommand
+									<b:Interaction.Triggers>
+										<b:EventTrigger EventName="KeyDown">
+											<b:InvokeCommandAction
 												PassEventArgsToCommand="True"
 												Command="{Binding ElementName=ColorCanvas, Path=TextBoxKeyDownCommand}"/>
-										</i:EventTrigger>
-										<i:EventTrigger EventName="LostFocus">
-											<command:EventToCommand
+										</b:EventTrigger>
+										<b:EventTrigger EventName="LostFocus">
+											<b:InvokeCommandAction
 												PassEventArgsToCommand="True"
 												Command="{Binding ElementName=ColorCanvas, Path=TextBoxLostFocusCommand}"/>
-										</i:EventTrigger>
-									</i:Interaction.Triggers>
+										</b:EventTrigger>
+									</b:Interaction.Triggers>
 								</controls:HexColorTextBox>
 								<Border
 									Grid.Column="1"

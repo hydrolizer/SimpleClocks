@@ -1,9 +1,12 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32602.291
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClocks", "SimpleClocks.csproj", "{1DBFCE3F-2D90-4FA7-AC3D-DE07C527AA6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleClocks", "SimpleClocks.csproj", "{1DBFCE3F-2D90-4FA7-AC3D-DE07C527AA6C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "..\..\Frameworks\mui.core\1.0\FirstFloor.ModernUI\Shared\Shared.shproj", "{EEDA74FC-CA5A-4C06-9654-2600B74E2D1D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FirstFloor.ModernUI.core", "..\..\Frameworks\mui.core\1.0\FirstFloor.ModernUI\FirstFloor.ModernUI\FirstFloor.ModernUI.core.csproj", "{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,11 +30,27 @@ Global
 		{1DBFCE3F-2D90-4FA7-AC3D-DE07C527AA6C}.Release|x64.Build.0 = Release|Any CPU
 		{1DBFCE3F-2D90-4FA7-AC3D-DE07C527AA6C}.Release|x86.ActiveCfg = Release|Any CPU
 		{1DBFCE3F-2D90-4FA7-AC3D-DE07C527AA6C}.Release|x86.Build.0 = Release|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Debug|x64.Build.0 = Debug|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Debug|x86.Build.0 = Debug|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Release|x64.ActiveCfg = Release|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Release|x64.Build.0 = Release|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Release|x86.ActiveCfg = Release|Any CPU
+		{8DF54EDD-6AC1-4A9C-9D8E-329DF9373FFD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3785B869-013F-4293-92F0-6D4AB23E2C91}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\Frameworks\mui.core\1.0\FirstFloor.ModernUI\Shared\Shared.projitems*{8df54edd-6ac1-4a9c-9d8e-329df9373ffd}*SharedItemsImports = 5
+		..\..\Frameworks\mui.core\1.0\FirstFloor.ModernUI\Shared\Shared.projitems*{eeda74fc-ca5a-4c06-9654-2600b74e2d1d}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

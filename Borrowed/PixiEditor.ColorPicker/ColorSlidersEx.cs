@@ -4,8 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ColorPicker;
-using SimpleClocks.Utils;
-using GalaSoft.MvvmLight.CommandWpf;
+using CommunityToolkit.Mvvm.Input;
 using SimpleClocks.Utils.Extensions;
 
 namespace SimpleClocks.Borrowed.PixiEditor.ColorPicker

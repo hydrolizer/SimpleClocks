@@ -112,7 +112,7 @@
 
 	<controls:MainWindowBase.Buttons>
 		<StackPanel
-			shell:WindowChrome.IsHitTestVisibleInChrome="True"
+			WindowChrome.IsHitTestVisibleInChrome="True"
 			Orientation="Horizontal">
 			<StackPanel.Resources>
 				<ResourceDictionary>

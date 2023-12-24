@@ -4,14 +4,13 @@
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:controls="clr-namespace:SimpleClocks.Controls"
 	xmlns:local="clr-namespace:SimpleClocks.Borrowed.Xceed"
-	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:bcp="clr-namespace:SimpleClocks.Borrowed.PixiEditor.ColorPicker"
-	xmlns:command="http://www.galasoft.ch/mvvmlight"
 	xmlns:colorPicker="clr-namespace:ColorPicker;assembly=ColorPicker"
-	xmlns:system="clr-namespace:System;assembly=mscorlib">
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:b="http://schemas.microsoft.com/xaml/behaviors">
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="/Xceed.Wpf.Toolkit;component/colorcanvas/themes/generic.xaml" />
+		<ResourceDictionary Source="/Xceed.Wpf.Toolkit.NET5;component/colorcanvas/themes/generic.xaml" />
 		<ResourceDictionary Source="/ColorPicker;component/Styles/DefaultColorPickerStyle.xaml" />
 		<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/Common.xaml" />
 		<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/DarkTextBoxStyle.xaml" />
@@ -206,13 +205,13 @@
 								<colorPicker:ColorSliders.Resources>
 									<Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource ColorSlidersTabControl}" />
 								</colorPicker:ColorSliders.Resources>
-								<i:Interaction.Triggers>
-									<i:EventTrigger EventName="Loaded">
-										<command:EventToCommand
+								<b:Interaction.Triggers>
+									<b:EventTrigger EventName="Loaded">
+										<b:InvokeCommandAction
 											PassEventArgsToCommand="True"
 											Command="{Binding Source={x:Static bcp:ColorSlidersEx.UpdateTabsCommand}}"/>
-									</i:EventTrigger>
-								</i:Interaction.Triggers>
+									</b:EventTrigger>
+								</b:Interaction.Triggers>
 							</colorPicker:ColorSliders>
 						</Grid>
 					</Border>

@@ -8,8 +8,10 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using Binding = System.Windows.Data.Binding;
-using ContextMenu = System.Windows.Controls.ContextMenu;
-using MenuItem = System.Windows.Controls.MenuItem;
+using // TODO ContextMenu is no longer supported. Use ContextMenuStrip instead. For more details see https://docs.microsoft.com/en-us/dotnet/core/compatibility/winforms#removed-controls
+ContextMenu = System.Windows.Controls.ContextMenu;
+using // TODO MenuItem is no longer supported. Use ToolStripMenuItem instead. For more details see https://docs.microsoft.com/en-us/dotnet/core/compatibility/winforms#removed-controls
+MenuItem = System.Windows.Controls.MenuItem;
 
 namespace SimpleClocks.Controls
 {

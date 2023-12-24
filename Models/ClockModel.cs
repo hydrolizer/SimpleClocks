@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using SimpleClocks.Services.Intefaces;
+﻿using SimpleClocks.Services.Intefaces;
 using SimpleClocks.Utils;
 using System;
 using System.ComponentModel;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using CommunityToolkit.Mvvm.Input;
 
 namespace SimpleClocks.Models
 {

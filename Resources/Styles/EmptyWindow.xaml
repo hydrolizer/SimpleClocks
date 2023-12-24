@@ -3,7 +3,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
 	xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-	xmlns:converters="clr-namespace:SimpleClocks.Utils.Converters">
+	xmlns:converters="clr-namespace:SimpleClocks.Utils.Converters"
+	xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock">
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/SimpleClocks;component/Resources/Styles/SystemButton.xaml" />
@@ -24,7 +25,7 @@
 				<ControlTemplate TargetType="{x:Type mui:ModernWindow}">
 					<Border
 						x:Name="WindowBorder"
-						Margin="{Binding Source={x:Static shell:SystemParameters2.Current}, Path=WindowNonClientFrameThickness}"
+						Margin="{Binding Source={x:Static xcad:SystemParameters2.Current}, Path=WindowNonClientFrameThickness}"
 						Background="{TemplateBinding Background}">
 						<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
 							<AdornerDecorator>
@@ -67,11 +68,11 @@
 											Grid.Column="1"
 											Orientation="Horizontal"
 											VerticalAlignment="Top"
-											shell:WindowChrome.IsHitTestVisibleInChrome="True">
+											WindowChrome.IsHitTestVisibleInChrome="True">
 											<Button
 												IsTabStop="False"
 												Focusable="False"
-												Command="{Binding Source={x:Static shell:SystemCommands.CloseWindowCommand}}"
+												Command="{Binding Source={x:Static xcad:SystemCommands.CloseWindowCommand}}"
 												ToolTip="Close">
 												<Button.Style>
 													<Style TargetType="{x:Type Button}" BasedOn="{StaticResource SystemCloseButton}">
@@ -125,9 +126,9 @@
 			</Setter.Value>
 		</Setter>
 
-		<Setter Property="shell:WindowChrome.WindowChrome">
+		<Setter Property="WindowChrome.WindowChrome">
 			<Setter.Value>
-				<shell:WindowChrome
+				<WindowChrome
 					CornerRadius="0"
 					GlassFrameThickness="1"
 					UseAeroCaptionButtons="False"

@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight.Command;
-using NLog;
+﻿using NLog;
 using SimpleClocks.Models;
 using SimpleClocks.Services.Intefaces;
 using SimpleClocks.Utils;
@@ -11,6 +10,7 @@ using System.ComponentModel;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Windows.Data;
+using CommunityToolkit.Mvvm.Input;
 
 namespace SimpleClocks.Services.Classes
 {
